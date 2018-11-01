@@ -6,32 +6,33 @@
 int olddata_num=0;//原始数据数量
 int newdata_num=0;//处理后数据数量
 
-int datashow=0;//当为0的时候，正常。
+int threadnum=0;//进入tcp接收中断的次数
 
-QByteArray databuffer;
-quint8 jiaoyanhe(quint8 data[],int n);
-QString laststr;
+//QString old_str;
+//QString new_str;
+
+quint8 jiaoyanhe(quint8 data[],int n);//校验一帧数据是否正确的函数
+QString laststr;//上次接收到数据，但末尾剩下些数据不足以构成一帧，转到下一次接收处理
 
 WorkThread::WorkThread()
 {
-    socket_emg = new QTcpSocket();
 
-    //连接信号槽
-   // QObject::connect(socket_emg,SIGNAL(readyRead()),this,SLOT(socket_Read_Data()));
-
-    QObject::connect(socket_emg, &QTcpSocket::readyRead, this, &WorkThread::socket_Read_Data,Qt::UniqueConnection);
-    QObject::connect(socket_emg, &QTcpSocket::disconnected, this, &WorkThread::socket_Disconnected,Qt::UniqueConnection);
 }
 
 void WorkThread::run()
 {
-    qDebug()<<"I am in thread!";
+    socket_emg = new QTcpSocket();
+
+    //连接信号槽
+    QObject::connect(socket_emg, &QTcpSocket::readyRead, this, &WorkThread::socket_Read_Data,Qt::BlockingQueuedConnection);
+    QObject::connect(socket_emg, &QTcpSocket::disconnected, this, &WorkThread::socket_Disconnected,Qt::BlockingQueuedConnection);
+
+    qDebug()<<"I am in thread run!";
 
     //取消已有的连接
     socket_emg->abort();
     //连接服务器
     socket_emg->connectToHost(IP, port);
-
     //等待连接成功
     if(!socket_emg->waitForConnected(30000))
     {
@@ -39,39 +40,22 @@ void WorkThread::run()
         return;
     }
     qDebug() << "Connect successfully!";
-
     exec();
-
-
-//    while(true)
-//    {
-//        if(socket_emg->waitForReadyRead())
-//        {
-//            socket_Read_Data();
-//        }
-//        //emit wifidataSignal_1("str");
-////        for(int n=0;n<10;n++)
-////            qDebug()<<n<<n<<n<<n<<n<<n<<n<<n;
-//    }
 }
 
 void WorkThread::socket_Read_Data()
 {
-    qDebug()<<"I am in thread!";
+    threadnum++;
+    qDebug()<<"I am in thread!"<<threadnum;
     QByteArray buffer;
     //读取缓冲区数据
     buffer = socket_emg->readAll();
 
     if((!buffer.isEmpty()))
     {
-
         //接收并解析原始数据
-        datashow=1;
         QString str = laststr+tr(buffer.toHex().data());
-
         laststr.clear();//清楚之前剩余的字符串
-        QString old_str;
-        QString new_str;
         QString error_data="37 08 00 08 00 08 00 08 00 08 00 08 00 08 00 08 00 45";
 
         //简单方法
@@ -89,7 +73,6 @@ void WorkThread::socket_Read_Data()
                 //old_str=old_str+hex_data+"\r\n";
 
                 //取出数据，校验和
-
                 quint8 data[18];
                 for(int i=0;i<18;++i)
                 {
@@ -149,12 +132,12 @@ void WorkThread::socket_Read_Data()
         }
 
         qDebug()<<"thread_new_data_size-->"<<new_str.size();
+        qDebug()<<"thread_num-->"<<threadnum;
         laststr=str.mid(dataloc);//获取剩余的字符串。从dataloc到末尾
-        emit wifidataSignal_1(old_str);//显示真实的一帧数据
-        old_str.clear();
-        emit wifidataSignal_2(new_str);//显示真实的一帧数据
-        new_str.clear();
-        datashow=1;
+        emit wifidataSignal_1("1");//显示真实的一帧数据
+        //old_str.clear();
+        emit wifidataSignal_2("2");//显示真实的一帧数据
+       // new_str.clear();
     }
 
 

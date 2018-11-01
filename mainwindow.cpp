@@ -24,6 +24,9 @@ int datashow=0;//当为0的时候，正常。
 int num=0;
 int num2=1;
 
+QString old_str;
+QString new_str;
+
 int left_emgroute=1;
 int right_emgroute=5;
 //左腿
@@ -138,18 +141,17 @@ void MainWindow::on_pushButton_Connect_clicked()
         ui->pushButton_Send->setEnabled(true);
         //修改按键文字
         ui->pushButton_Connect->setText("断开连接");
-        thread1=new WorkThread();
-        connect(thread1, SIGNAL(wifidataSignal_1(QString)), this, SLOT(Displaywifidata_01(QString)),Qt::UniqueConnection);
-        connect(thread1, SIGNAL(wifidataSignal_2(QString)), this, SLOT(Displaywifidata_02(QString)),Qt::UniqueConnection);
+        thread1=new WorkThread();//新建线程
+        connect(thread1, SIGNAL(wifidataSignal_1(QString)), this, SLOT(Displaywifidata_01(QString)));
+        connect(thread1, SIGNAL(wifidataSignal_2(QString)), this, SLOT(Displaywifidata_02(QString)));
 
         QObject::connect(this, SIGNAL(Send_IP(QString)), thread1, SLOT(socket_IP(QString)));
-        QObject::connect(this, SIGNAL(Send_Port(QString)), thread1, SLOT(socket_Port(QString)));
+        QObject::connect(this, SIGNAL(Send_Port(int)), thread1, SLOT(socket_Port(int)));
 
         thread1->start();
 
         emit Send_IP(ui->lineEdit_IP->text());
         emit Send_Port(ui->lineEdit_Port->text().toInt());
-
 
     }
     else
@@ -217,13 +219,15 @@ void MainWindow::on_pushButton_dataclear_2_clicked()
 
 void MainWindow::Displaywifidata_01(QString str_01)
 {
-   ui->textEdit_Recv_data->append(str_01);//显示原始数据
+   ui->textEdit_Recv_data->append(old_str);//显示原始数据
    qDebug()<<"size-->";
+   old_str.clear();
 }
 
 void MainWindow::Displaywifidata_02(QString str_02)
 {
-    ui->textEdit_Recv->append(str_02);//显示真实的一帧数据
+    ui->textEdit_Recv->append(new_str);//显示真实的一帧数据
+    //new_str.clear();
 
     //获得double类型数据
     double left_now_data[4000]={0};
@@ -235,9 +239,9 @@ void MainWindow::Displaywifidata_02(QString str_02)
     int loc_huanhang_end=0;
     int k=0;
 
-    while((loc_huanhang_end=(str_02.indexOf(z,loc_huanhang_end+6)))>0)
+    while((loc_huanhang_end=(new_str.indexOf(z,loc_huanhang_end+6)))>0)
     {
-        QString dou_data=str_02.mid(loc_huanhang_first,loc_huanhang_end-loc_huanhang_first);
+        QString dou_data=new_str.mid(loc_huanhang_first,loc_huanhang_end-loc_huanhang_first);
         loc_huanhang_first=loc_huanhang_end+2;
         int i=0;
         int loc_douhao_first=0;
@@ -271,7 +275,7 @@ void MainWindow::Displaywifidata_02(QString str_02)
         }
         k++;
     }
-
+    new_str.clear();
 
     int size = k;//数据个数
 
