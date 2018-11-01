@@ -19,7 +19,7 @@
 
 using namespace QtCharts;
 
-//int datashow=0;//当为0的时候，正常。
+int datashow=0;//当为0的时候，正常。
 
 int num=0;
 int num2=1;
