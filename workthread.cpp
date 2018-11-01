@@ -45,8 +45,8 @@ void WorkThread::run()
 
 void WorkThread::socket_Read_Data()
 {
-    threadnum++;
-    qDebug()<<"I am in thread!"<<threadnum;
+    //threadnum++;
+    //qDebug()<<"I am in thread!"<<threadnum;
     QByteArray buffer;
     //读取缓冲区数据
     buffer = socket_emg->readAll();
@@ -79,10 +79,10 @@ void WorkThread::socket_Read_Data()
                     data[i]=hex_data.mid(i*2,2).toLatin1().toUInt(Q_NULLPTR,16);
                 }
 
-                if(data[17]==jiaoyanhe(data,17))
-                {
-                    old_str=old_str+hex_data+"\r\n";
-                    olddata_num++;
+//                if(data[17]==jiaoyanhe(data,17))
+//                {
+                    //old_str=old_str+hex_data+"\r\n";
+                    //olddata_num++;
                     //ui->data16h->append(hex_data);//获得数据
 
                     quint16 showdata[8]={0x0000};
@@ -97,33 +97,34 @@ void WorkThread::socket_Read_Data()
                         data_float_string = data_float_string+QString("%1,").arg(showdata2[i]);
                     }
                     new_str=new_str+data_float_string+"\r\n";
-                    newdata_num++;
+                    //newdata_num++;
                     //ui->datafloat->append(data_float_string);
 
-                }else
-                {
-                    old_str=old_str+error_data+"\r\n";
-                    //ui->data16h->append(error_data);//抛弃错误数据
-                    quint8 data[18];
-                    for(int i=0;i<18;++i)
-                    {
-                        data[i]=error_data.mid(i*2,2).toLatin1().toUInt(Q_NULLPTR,16);
-                    }
+//                }
+//                else
+//                {
+//                    //old_str=old_str+error_data+"\r\n";
+//                    //ui->data16h->append(error_data);//抛弃错误数据
+//                    quint8 data[18];
+//                    for(int i=0;i<18;++i)
+//                    {
+//                        data[i]=error_data.mid(i*2,2).toLatin1().toUInt(Q_NULLPTR,16);
+//                    }
 
-                    quint16 showdata[8]={0x0000};
-                    float showdata2[8]={0.0};
-                    QString data_float_string;
-                    for(int i=0;i<8;++i)
-                    {
-                        showdata[i]=data[i*2+1];
-                        showdata[i]=(showdata[i]<<8)+data[i*2+2];
-                        showdata2[i]=showdata[i];
-                        showdata2[i]=showdata2[i]/4096*3.3;
-                        data_float_string = data_float_string+QString("%1,").arg(showdata2[i]);
-                    }
-                    new_str=new_str+data_float_string+"\r\n";
-                    //ui->datafloat->append(data_float_string);
-                }
+//                    quint16 showdata[8]={0x0000};
+//                    float showdata2[8]={0.0};
+//                    QString data_float_string;
+//                    for(int i=0;i<8;++i)
+//                    {
+//                        showdata[i]=data[i*2+1];
+//                        showdata[i]=(showdata[i]<<8)+data[i*2+2];
+//                        showdata2[i]=showdata[i];
+//                        showdata2[i]=showdata2[i]/4096*3.3;
+//                        data_float_string = data_float_string+QString("%1,").arg(showdata2[i]);
+//                    }
+//                    new_str=new_str+data_float_string+"\r\n";
+//                    //ui->datafloat->append(data_float_string);
+//                }
                 dataloc=datanow;
             }else
             {
@@ -131,10 +132,10 @@ void WorkThread::socket_Read_Data()
             }
         }
 
-        qDebug()<<"thread_new_data_size-->"<<new_str.size();
-        qDebug()<<"thread_num-->"<<threadnum;
+        //qDebug()<<"thread_new_data_size-->"<<new_str.size();
+        //qDebug()<<"thread_num-->"<<threadnum;
         laststr=str.mid(dataloc);//获取剩余的字符串。从dataloc到末尾
-        emit wifidataSignal_1("1");//显示真实的一帧数据
+        //emit wifidataSignal_1("1");//显示真实的一帧数据
         //old_str.clear();
         emit wifidataSignal_2("2");//显示真实的一帧数据
        // new_str.clear();

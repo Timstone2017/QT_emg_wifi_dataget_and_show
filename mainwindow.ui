@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1854</width>
-    <height>643</height>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>肌电数据同步采集显示</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLineEdit" name="lineEdit_IP">
@@ -40,9 +40,9 @@
    <widget class="QPushButton" name="pushButton_Connect">
     <property name="geometry">
      <rect>
-      <x>822</x>
-      <y>17</y>
-      <width>111</width>
+      <x>20</x>
+      <y>80</y>
+      <width>351</width>
       <height>31</height>
      </rect>
     </property>
@@ -77,18 +77,18 @@
     <property name="geometry">
      <rect>
       <x>379</x>
-      <y>60</y>
+      <y>10</y>
       <width>561</width>
-      <height>271</height>
+      <height>321</height>
      </rect>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_Send">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>380</x>
       <y>450</y>
-      <width>781</width>
+      <width>421</width>
       <height>31</height>
      </rect>
     </property>
@@ -117,18 +117,25 @@
    <widget class="QTextEdit" name="textEdit_Recv_data">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
+      <x>10</x>
+      <y>370</y>
       <width>351</width>
-      <height>271</height>
+      <height>111</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+border-image: url(:/myx/1.jpg);</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>20</y>
+      <x>20</x>
+      <y>50</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -139,28 +146,15 @@
      </font>
     </property>
     <property name="text">
-     <string>端口：</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_dataclear_1">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>340</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>清除数据</string>
+     <string>端  口：</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_Port">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>20</y>
-      <width>281</width>
+      <x>100</x>
+      <y>50</y>
+      <width>271</width>
       <height>21</height>
      </rect>
     </property>
@@ -280,24 +274,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>330</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>数据行数：</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -314,24 +290,6 @@
     </property>
     <property name="text">
      <string>数据行数：</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>330</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_6">
@@ -415,6 +373,23 @@
     </property>
     <property name="text">
      <string>…</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>361</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+border-image: url(:/myx/emg.png);</string>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>

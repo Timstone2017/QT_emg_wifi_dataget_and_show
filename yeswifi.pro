@@ -23,3 +23,6 @@ HEADERS  += mainwindow.h \
     cglobal.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    mypicture.qrc

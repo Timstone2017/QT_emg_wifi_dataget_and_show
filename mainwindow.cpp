@@ -219,9 +219,9 @@ void MainWindow::on_pushButton_dataclear_2_clicked()
 
 void MainWindow::Displaywifidata_01(QString str_01)
 {
-   ui->textEdit_Recv_data->append(old_str);//显示原始数据
-   qDebug()<<"size-->";
-   old_str.clear();
+//   ui->textEdit_Recv_data->append(old_str);//显示原始数据
+//   qDebug()<<"size-->";
+//   old_str.clear();
 }
 
 void MainWindow::Displaywifidata_02(QString str_02)
@@ -279,7 +279,7 @@ void MainWindow::Displaywifidata_02(QString str_02)
 
     int size = k;//数据个数
 
-    qDebug()<<"size-->"<<size;
+    //qDebug()<<"size-->"<<size;
     if(isVisible()){
         QVector<QPointF> oldPoints = left_series->pointsVector();//Returns the points in the series as a vector
         QVector<QPointF> points;
@@ -319,7 +319,7 @@ double MainWindow::getData(double time){
 void MainWindow::timerEvent(QTimerEvent *event){
     if(event->timerId()==timeId){//定时器到时间,//模拟数据填充
 
-        ui->label_5->setText(QString::number(ui->textEdit_Recv_data->document()->lineCount()));
+        //ui->label_5->setText(QString::number(ui->textEdit_Recv_data->document()->lineCount()));
         ui->label_6->setText(QString::number(ui->textEdit_Recv->document()->lineCount()));
 
 //        static QTime dataTime(QTime::currentTime());
@@ -352,41 +352,49 @@ void MainWindow::timerEvent(QTimerEvent *event){
 void MainWindow::on_emg1_clicked()
 {
     left_emgroute=1;
+    left_chart->setTitle("肌电通道1");
 }
 
 void MainWindow::on_emg2_clicked()
 {
     left_emgroute=2;
+    left_chart->setTitle("肌电通道2");
 }
 
 void MainWindow::on_emg3_clicked()
 {
     left_emgroute=3;
+    left_chart->setTitle("肌电通道3");
 }
 
 void MainWindow::on_emg4_clicked()
 {
     left_emgroute=4;
+    left_chart->setTitle("肌电通道4");
 }
 
 void MainWindow::on_emg5_clicked()
 {
     right_emgroute=5;
+    right_chart->setTitle("肌电通道5");
 }
 
 void MainWindow::on_emg6_clicked()
 {
     right_emgroute=6;
+    right_chart->setTitle("肌电通道6");
 }
 
 void MainWindow::on_emg7_clicked()
 {
     right_emgroute=7;
+    right_chart->setTitle("肌电通道7");
 }
 
 void MainWindow::on_emg8_clicked()
 {
     right_emgroute=8;
+    right_chart->setTitle("肌电通道8");
 }
 
 void MainWindow::on_pushButton_outputloc_clicked()
